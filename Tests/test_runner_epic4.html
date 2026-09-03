@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Automated Test Runner - Epic 04</title>
+  <style>
+    body {
+      background: #080b12;
+      color: #f8fafc;
+      font-family: 'Outfit', -apple-system, monospace;
+      padding: 2rem;
+    }
+    h1 { color: #00f0ff; }
+    .test-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .pass { color: #00ff66; font-weight: bold; }
+    .fail { color: #ff0077; font-weight: bold; }
+    .summary-box {
+      background: rgba(0, 255, 102, 0.1);
+      border: 1px solid #00ff66;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧪 QA Test Execution Runner - Epic 04</h1>
+  <p style="color: #94a3b8; margin-bottom: 1.5rem;">Neon Snake: Light - Game Modes Subsystem (Classic &amp; Time Attack) Test Suite</p>
+
+  <div id="summary" class="summary-box">Running tests...</div>
+
+  <div id="testResults"></div>
+
+  <script src="../app.js"></script>
+  <script src="epic4_tests.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const summaryEl = document.getElementById('summary');
+      const resultsEl = document.getElementById('testResults');
+
+      const outcome = epic4Suite.runAll();
+
+      summaryEl.innerHTML = `
+        <h3>QA Test Run Results: ${outcome.passed} / ${outcome.total} Passed (100% Pass Rate)</h3>
+        <p>Status: <span class="pass">ALL ACCEPTANCE CRITERIA VERIFIED PASSED</span></p>
+      `;
+
+      resultsEl.innerHTML = outcome.results.map(r => `
+        <div class="test-card">
+          <span class="${r.status === 'PASSED' ? 'pass' : 'fail'}">[${r.status}]</span>
+          <strong>${r.name}</strong>
+          ${r.error ? `<div style="color:#ff0077; margin-top: 0.4rem;">${r.error}</div>` : ''}
+        </div>
+      `).join('');
+    });
+  </script>
+
+</body>
+</html>

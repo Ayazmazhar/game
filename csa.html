@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Snake: Light - Epic 01, 02, 03, 04 &amp; 05 Customization</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <header>
+        <h1 class="brand-title">Neon Snake: Light</h1>
+        <span class="badge-tag">EPIC 01-08 COMPLETE ENGINE</span>
+        <button id="btnTutorial" class="badge-tag" style="background: rgba(0, 240, 255, 0.2); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); cursor: pointer; margin-left: 0.5rem;">📖 How to Play (Tutorial)</button>
+        <a href="landing.html" class="badge-tag" style="text-decoration: none; margin-left: 0.5rem;">🌐 View Landing Page</a>
+    </header>
+
+    <main class="dashboard-grid">
+
+        <!-- Left Sidebar: Controls, FSM, Modes, Themes & Skins -->
+        <aside id="sidebarPanel" class="glass-panel glass-panel-sidebar">
+            <!-- EPIC 05: Dynamic Environment & Theme Selector (US-502) -->
+            <div class="panel-title">
+                <span>🎨 Dynamic Environment &amp; Theme (US-502)</span>
+            </div>
+
+            <div id="themePickerGroup" class="theme-picker-grid">
+                <button class="theme-pill active-theme" data-theme="DARK">
+                    <span class="theme-dot"></span> Cyber Dark
+                </button>
+                <button class="theme-pill" data-theme="LIGHT">
+                    <span class="theme-dot"></span> Clean Light
+                </button>
+                <button class="theme-pill" data-theme="FOREST">
+                    <span class="theme-dot"></span> 🌲 Forest
+                </button>
+                <button class="theme-pill" data-theme="CITY">
+                    <span class="theme-dot"></span> 🏙️ City
+                </button>
+                <button class="theme-pill" data-theme="DESERT">
+                    <span class="theme-dot"></span> 🏜️ Desert
+                </button>
+                <button class="theme-pill" data-theme="SUNSET">
+                    <span class="theme-dot"></span> 🌅 Sunset
+                </button>
+            </div>
+
+            <!-- EPIC 05: Snake Skin Customization Picker (US-503) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🐍 Snake Skin Customization (US-503)</span>
+            </div>
+
+            <div id="skinPickerGroup" class="skin-picker-grid">
+                <button class="skin-pill active-skin" data-skin="0">Neon Green</button>
+                <button class="skin-pill" data-skin="1">Cyan Cyber</button>
+                <button class="skin-pill" data-skin="2">Magenta Pink</button>
+                <button class="skin-pill" data-skin="3">Solar Yellow</button>
+                <button class="skin-pill" data-skin="4">Rainbow Pulse</button>
+            </div>
+
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">Active Skin:</span>
+                    <span id="statActiveSkin" class="stat-val">Default Neon Green</span>
+                </div>
+            </div>
+
+            <!-- Speed Scaling Difficulty Selector -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>⚡ Speed Scaling Difficulty</span>
+            </div>
+
+            <div id="speedPickerGroup" class="speed-picker-grid">
+                <button class="speed-pill" data-speed="LOW"
+                    title="Slow &amp; easy constant speed across all levels (0% increase)">⚡ Low (Slow
+                    Constant)</button>
+                <button class="speed-pill active-speed" data-speed="MEDIUM"
+                    title="Smooth progressive speed scaling (+2.0% gradual increase)">⚡ Medium (+2%/lvl)</button>
+                <button class="speed-pill" data-speed="HIGH"
+                    title="Fast arcade speed scaling (+5.0% per score milestone)">⚡
+                    High (+5%/lvl)</button>
+            </div>
+
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">Speed Mode:</span>
+                    <span id="statSpeedMode" class="stat-val">Medium (+2.0% Progressive)</span>
+                </div>
+            </div>
+
+            <!-- EPIC 05: Stack Navigation Router (US-501) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🧭 Navigation Stack Router (US-501)</span>
+            </div>
+
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">Current View:</span>
+                    <span id="statCurrentView" class="stat-val">MainMenu</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Back Stack Depth:</span>
+                    <span id="statStackDepth" class="stat-val">1</span>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnNavPush" class="cyber-btn">Push Sub-View</button>
+                <button id="btnNavPop" class="cyber-btn">Pop Back Stack</button>
+                <button id="btnNavHome" class="cyber-btn">Navigate Home</button>
+            </div>
+
+            <!-- Polymorphic Game Mode Selector (US-401) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🎮 Polymorphic Game Mode Subsystem</span>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnModeClassic" class="cyber-btn active-mode">Classic (Endless)</button>
+                <button id="btnModeTimeAttack" class="cyber-btn">Time Attack (60s)</button>
+                <button id="btnModeLevel" class="cyber-btn">Level Mode</button>
+                <button id="btnModeGhost" class="cyber-btn">👻 Ghost Mode</button>
+            </div>
+
+            <!-- Ghost Mode HUD -->
+            <div id="ghostModeCard" class="fsm-status hidden">
+                <div>
+                    <span class="stat-label">👻 Ghost Record:</span>
+                    <div id="hudGhostStatus" class="score-display" style="font-size: 0.95rem; color: var(--neon-cyan);">Best Run Ghost Active</div>
+                </div>
+                <div style="text-align: right;">
+                    <span class="stat-label">Ghost Score:</span>
+                    <div id="hudGhostScore" class="score-display">0</div>
+                </div>
+            </div>
+
+            <!-- Level Mode Selector & Goal HUD -->
+            <div id="levelModeCard" class="hidden"
+                style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.4rem;">
+                <span class="stat-label">🎯 Select Level (42 Stages - Ghost Mode every 5 levels!):</span>
+                <div id="levelPickerGroup" class="level-picker-grid">
+                </div>
+                <div class="fsm-status">
+                    <div>
+                        <span class="stat-label" id="hudLevelTitle">Stage 1: Novice Glide</span>
+                        <div id="hudLevelGoal" class="score-display" style="font-size: 1.1rem;">Target Goal: 50 Pts
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="stat-label">Level Progress:</span>
+                        <div id="hudLevelProgress" class="score-display" style="font-size: 1.1rem;">0 / 50</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Attack 60s Countdown Timer HUD -->
+            <div id="timeAttackCard" class="fsm-status hidden">
+                <div>
+                    <span class="stat-label">Remaining Time:</span>
+                    <div id="hudTimer" class="score-display highscore-display">60.0s</div>
+                </div>
+                <div style="text-align: right;">
+                    <span class="stat-label">Time Attack Best:</span>
+                    <div id="hudTimeAttackBest" class="score-display">0</div>
+                </div>
+            </div>
+
+            <!-- Live Score HUD (US-302) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🏆 Score Engine (US-302)</span>
+            </div>
+
+            <div class="fsm-status">
+                <div>
+                    <span class="stat-label">Current Score:</span>
+                    <div id="hudScore" class="score-display">0</div>
+                </div>
+                <div style="text-align: right;">
+                    <span class="stat-label">Session High Score:</span>
+                    <div id="hudHighScore" class="score-display highscore-display">0</div>
+                </div>
+            </div>
+
+            <!-- Anti-Tamper Security Hash (US-303) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🔒 Anti-Tamper Security Hash (US-303)</span>
+            </div>
+
+            <div class="fsm-status">
+                <span class="stat-label">HMAC-SHA256:</span>
+                <span id="securityBadge" class="state-indicator state-verified">SECURITY VERIFIED</span>
+            </div>
+
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">Security Hash:</span>
+                    <span id="statSecurityHash" class="stat-val hash-truncate">a8f9c4...7e1b</span>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnCorruptSave" class="cyber-btn btn-pink">Inject Corrupt Save</button>
+                <button id="btnResetSave" class="cyber-btn">Reset Save Data</button>
+            </div>
+
+            <!-- Application FSM Router -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>⚙️ Application FSM Router</span>
+            </div>
+
+            <div class="fsm-status">
+                <span class="stat-label">Current State:</span>
+                <span id="fsmBadge" class="state-indicator state-boot">BOOTSTATE</span>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnBoot" class="cyber-btn">Trigger Boot</button>
+                <button id="btnMenu" class="cyber-btn">Main Menu</button>
+                <button id="btnStart" class="cyber-btn btn-green">Start Game</button>
+                <button id="btnPause" class="cyber-btn">Pause / Resume</button>
+                <button id="btnGameOver" class="cyber-btn btn-pink">Simulate Crash</button>
+            </div>
+
+            <!-- EPIC 06: Audio, 5 Music Tracks & Custom Device Sound (US-601, US-602, US-603) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🔊 Audio, 5 Music Tracks &amp; Custom Sound</span>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnSoundToggle" class="cyber-btn active-mode">Sound: ON</button>
+                <button id="btnBgmToggle" class="cyber-btn active-mode">BGM: ON</button>
+                <button id="btnVibeToggle" class="cyber-btn active-mode">Haptics: ON</button>
+                <button id="btnShareScore" class="cyber-btn btn-green">Share Score</button>
+            </div>
+
+            <!-- 5 Built-in Sound Tracks Selector -->
+            <div class="stat-row"
+                style="margin-top: 0.5rem; flex-direction: column; align-items: flex-start; gap: 0.35rem;">
+                <span class="stat-label">🎵 Select Music Track (5 Built-in Tracks):</span>
+                <select id="selectBgmTrack" class="cyber-select">
+                    <option value="0">🎵 Track 1: Cyber Synthwave</option>
+                    <option value="1">🌲 Track 2: Forest Nature Beats</option>
+                    <option value="2">🏙️ Track 3: Cyber City Nights</option>
+                    <option value="3">🏜️ Track 4: Desert Sand Dune</option>
+                    <option value="4">🌅 Track 5: Sunset Chillout</option>
+                    <option value="custom" id="optCustomTrack" disabled>📁 Custom Mobile File</option>
+                </select>
+            </div>
+
+            <!-- Custom Mobile/Device Audio File Uploader -->
+            <div class="stat-row"
+                style="margin-top: 0.4rem; flex-direction: column; align-items: flex-start; gap: 0.35rem;">
+                <span class="stat-label">📁 Upload Custom Sound from Mobile/Device:</span>
+                <input type="file" id="inputCustomAudio" accept="audio/*" style="display: none;" />
+                <button id="btnUploadAudio" class="cyber-btn btn-green" style="width: 100%;">📁 Pick Audio File (.mp3,
+                    .wav,
+                    .m4a)</button>
+            </div>
+
+            <div class="stats-list" style="margin-top: 0.4rem;">
+                <div class="stat-row">
+                    <span class="stat-label">Active Music Track:</span>
+                    <span id="statActiveMusic" class="stat-val" style="color: var(--neon-cyan);">Cyber Synthwave</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Audio Pool State:</span>
+                    <span id="statAudioStatus" class="stat-val" style="color: var(--neon-green);">ACTIVE (SFX
+                        READY)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Vibration Motor:</span>
+                    <span id="statHapticsStatus" class="stat-val" style="color: var(--neon-green);">ENABLED
+                        (30ms)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Share Bridge Output:</span>
+                    <span id="statShareOutput" class="stat-val hash-truncate">Ready to dispatch</span>
+                </div>
+            </div>
+
+            <!-- EPIC 07: Monetization & Google AdMob Integration (US-701, US-702, US-703) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>📺 Monetization & Google AdMob (Epic 07)</span>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnWatchAd" class="cyber-btn btn-green">Watch Ad to Revive</button>
+                <button id="btnToggleNetwork" class="cyber-btn active-mode">Network: ONLINE</button>
+            </div>
+
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">AdMob SDK State:</span>
+                    <span id="statAdStatus" class="stat-val" style="color: var(--neon-green);">INITIALIZED
+                        (READY)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Revive Availability:</span>
+                    <span id="statReviveStatus" class="stat-val" style="color: var(--neon-cyan);">AVAILABLE (1 /
+                        Run)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Test Ad Unit ID:</span>
+                    <span id="statAdUnit" class="stat-val hash-truncate">ca-app-pub-394.../5224354917</span>
+                </div>
+            </div>
+
+            <!-- EPIC 08: Non-Functional Optimization & Release APK Build (US-801, US-802, US-803, US-804) -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🚀 Profiler & Release Build (Epic 08)</span>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnFps30" class="cyber-btn active-mode">30 FPS Cap (NFR-01)</button>
+                <button id="btnFps60" class="cyber-btn">60 FPS Ultra</button>
+            </div>
+
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">Frame Rate / Delta:</span>
+                    <span id="statLiveFPS" class="stat-val" style="color: var(--neon-green);">30 FPS (33.3 ms)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Core Tick Heap GC:</span>
+                    <span id="statGcAlloc" class="stat-val" style="color: var(--neon-cyan);">0 Bytes / Tick</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Release APK Size:</span>
+                    <span id="statApkSize" class="stat-val" style="color: var(--neon-green);">11.8 MB (&le;15MB
+                        OK)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Target Architecture:</span>
+                    <span id="statBuildConfig" class="stat-val hash-truncate">ARM64-v8a / API 34+</span>
+                </div>
+            </div>
+
+            <!-- Input Management Subsystem Selector -->
+            <div class="panel-title" style="margin-top: 0.8rem;">
+                <span>🎮 Input Control Mode</span>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnModeSwipe" class="cyber-btn active-mode">Swipe Gesture Mode</button>
+                <button id="btnModeDpad" class="cyber-btn">Touch D-Pad Mode</button>
+            </div>
+        </aside>
+
+        <!-- Center/Right: 2D Grid Canvas & Viewport -->
+        <section class="game-viewport">
+            <!-- In-Game Quick Action Controls Header Bar -->
+            <div class="game-header-bar">
+                <button id="btnQuickPause" class="game-quick-btn" title="Pause / Resume Game">
+                    <span>⏸️ Pause</span>
+                </button>
+                <div class="header-score-pill">
+                    <span class="pill-label">SCORE:</span>
+                    <span id="gameHeaderScore" class="pill-value">0</span>
+                </div>
+                <button id="btnQuickHome" class="game-quick-btn btn-home-quick" title="Return to Main Menu">
+                    <span>🏠 Main Menu</span>
+                </button>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+                <!-- HTML Interactive Canvas Overlays -->
+                <div id="overlayMenu" class="canvas-overlay">
+                    <div class="overlay-card">
+                        <h2 class="overlay-title">NEON SNAKE</h2>
+                        <p class="overlay-sub">LIGHT EDITION</p>
+                        <button id="btnOverlayPlay" class="cyber-btn btn-green btn-large">▶ START GAME</button>
+                        <p class="overlay-hint">Arrow Keys / WASD / Touch Swipe</p>
+                    </div>
+                </div>
+
+                <div id="overlayGameOver" class="canvas-overlay hidden">
+                    <div class="overlay-card card-danger">
+                        <h2 class="overlay-title title-danger">GAME OVER</h2>
+                        <div class="overlay-scores">
+                            <div><span>Score:</span> <strong id="overlayFinalScore">0</strong></div>
+                            <div><span>Best:</span> <strong id="overlayHighScore">0</strong></div>
+                        </div>
+                        <div class="btn-group vertical-group">
+                            <button id="btnOverlayRevive" class="cyber-btn btn-green btn-large">📺 Watch Ad to
+                                Revive</button>
+                            <button id="btnOverlayRestart" class="cyber-btn btn-large">🔄 Play Again</button>
+                            <button id="btnOverlayShare" class="cyber-btn">📤 Share Score</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="overlayPaused" class="canvas-overlay hidden">
+                    <div class="overlay-card"
+                        style="box-shadow: 0 0 35px rgba(0, 240, 255, 0.4); background: rgba(9, 14, 28, 0.92);">
+                        <div class="hint-badge" style="border-color: var(--neon-cyan); color: var(--neon-cyan);">⏸️ GAME
+                            FROZEN AT
+                            CURRENT POSITION</div>
+                        <h2 class="overlay-title" style="margin: 0.2rem 0;">PAUSED</h2>
+                        <div class="overlay-scores">
+                            <div><span>Score:</span> <strong id="overlayPausedScore">0</strong></div>
+                            <div><span>Best:</span> <strong id="overlayPausedHighScore">0</strong></div>
+                        </div>
+                        <button id="btnOverlayResume" class="cyber-btn btn-green btn-large" style="width: 100%;">▶
+                            Resume
+                            Game</button>
+                        <button id="btnOverlayHome" class="cyber-btn" style="width: 100%;">🏠 Return to Main
+                            Menu</button>
+                    </div>
+                </div>
+
+                <div id="overlayLevelCleared" class="canvas-overlay hidden">
+                    <div class="overlay-card card-success">
+                        <h2 class="overlay-title title-success">LEVEL CLEARED!</h2>
+                        <p class="overlay-sub" style="color: var(--neon-yellow);" id="overlayLevelClearedSub">STAGE
+                            COMPLETED 🎉</p>
+                        <div class="overlay-scores">
+                            <div><span>Target Met:</span> <strong id="overlayLevelClearedScore">50 Pts</strong></div>
+                        </div>
+                        <div class="btn-group vertical-group">
+                            <button id="btnOverlayNextLevel" class="cyber-btn btn-green btn-large">▶ Next Level</button>
+                            <button id="btnOverlayReplayLevel" class="cyber-btn">🔄 Replay Level</button>
+                            <button id="btnOverlayLevelHome" class="cyber-btn">🏠 Main Menu</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pre-Game Animated 3-2-1 Countdown Overlay -->
+                <div id="overlayCountdown" class="canvas-overlay hidden">
+                    <div class="countdown-card">
+                        <div class="hint-badge">🎮 GET READY!</div>
+                        <div id="countdownNumber" class="countdown-num">3</div>
+                        <p id="countdownHintText" class="hint-sub">Arrow Keys / WASD / Touch Swipe to Move</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rewarded Video Simulated Ad Modal -->
+            <div id="adModal" class="modal-backdrop hidden">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <span>📺 Google AdMob Rewarded Video</span>
+                        <span class="badge-tag">TEST AD UNIT</span>
+                    </div>
+                    <div class="ad-video-container">
+                        <div class="ad-spinner"></div>
+                        <p id="adModalStatus">Playing Rewarded Video Ad...</p>
+                        <div class="progress-bar-bg">
+                            <div id="adProgressBar" class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <p class="modal-footer-note">Complete video to earn 1x Revive Reward</p>
+                </div>
+            </div>
+
+            <!-- 📱 MOBILE TOUCH CONTROLS - Always visible during gameplay on mobile -->
+            <div id="mobileTouchControls" class="mobile-touch-controls hidden">
+                <div class="mobile-dpad-wrapper">
+                    <!-- D-Pad Label -->
+                    <div class="mobile-ctrl-label">🎮 TOUCH CONTROLS</div>
+
+                    <!-- D-Pad Grid Layout -->
+                    <div class="mobile-dpad-grid">
+                        <!-- Top Row: Up -->
+                        <div class="dpad-cell dpad-cell-empty"></div>
+                        <div class="dpad-cell">
+                            <button id="mobileDpadUp" class="mobile-dpad-btn mobile-dpad-up" aria-label="Move Up"
+                                ontouchstart="event.preventDefault()">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 4L4 16h16L12 4z" fill="currentColor" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="dpad-cell dpad-cell-empty"></div>
+
+                        <!-- Middle Row: Left + Center + Right -->
+                        <div class="dpad-cell">
+                            <button id="mobileDpadLeft" class="mobile-dpad-btn mobile-dpad-left" aria-label="Move Left"
+                                ontouchstart="event.preventDefault()">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                    <path d="M20 12H4M4 12L12 4M4 12L12 20" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="dpad-cell">
+                            <div class="mobile-dpad-center">🐍</div>
+                        </div>
+                        <div class="dpad-cell">
+                            <button id="mobileDpadRight" class="mobile-dpad-btn mobile-dpad-right"
+                                aria-label="Move Right" ontouchstart="event.preventDefault()">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                    <path d="M4 12h16M16 12L8 4M16 12L8 20" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Bottom Row: Down -->
+                        <div class="dpad-cell dpad-cell-empty"></div>
+                        <div class="dpad-cell">
+                            <button id="mobileDpadDown" class="mobile-dpad-btn mobile-dpad-down" aria-label="Move Down"
+                                ontouchstart="event.preventDefault()">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 20L4 8h16L12 20z" fill="currentColor" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="dpad-cell dpad-cell-empty"></div>
+                    </div>
+
+                    <!-- Quick Action Row -->
+                    <div class="mobile-action-row">
+                        <button id="mobilePauseBtn" class="mobile-action-btn" aria-label="Pause Game">⏸️ Pause</button>
+                        <button id="mobileHomeBtn" class="mobile-action-btn mobile-home-btn" aria-label="Main Menu">🏠
+                            Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive D-Pad Overlay (Legacy sidebar D-Pad Mode) -->
+            <div id="dpadContainer" class="dpad-container hidden">
+                <button id="dpadUp" class="dpad-btn dpad-up" aria-label="Up">▲</button>
+                <button id="dpadLeft" class="dpad-btn dpad-left" aria-label="Left">◄</button>
+                <button id="dpadRight" class="dpad-btn dpad-right" aria-label="Right">►</button>
+                <button id="dpadDown" class="dpad-btn dpad-down" aria-label="Down">▼</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 📖 IN-GAME TUTORIAL MODAL (SRS Section 2.6) -->
+    <div id="tutorialModal" class="modal-backdrop hidden">
+        <div class="modal-card tutorial-modal-card">
+            <div class="modal-header">
+                <span>📖 In-Game Instructions &amp; Guide</span>
+                <button id="btnCloseTutorial" class="cyber-btn btn-pink" style="padding: 0.2rem 0.6rem; font-size: 0.8rem;">✕ Close</button>
+            </div>
+            
+            <div class="tutorial-section">
+                <div class="tutorial-section-title">🎮 1. Game Controls &amp; Movement</div>
+                <div class="tutorial-text">
+                    • <strong>Swipe Gestures:</strong> Swipe anywhere on touch screen to turn Snake.<br>
+                    • <strong>Touch D-Pad:</strong> Use on-screen directional buttons for precise tapping.<br>
+                    • <strong>Keyboard:</strong> Use <code>Arrow Keys</code> or <code>W A S D</code> to steer.<br>
+                    • <strong>180° Safety Guard:</strong> Instant 180° turns are automatically prevented to prevent accidental self-crash.
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <div class="tutorial-section-title">🕹️ 2. Game Modes</div>
+                <div class="tutorial-grid">
+                    <div class="tutorial-text">
+                        <strong>Classic (Endless):</strong> Endless survival! Speed increases as score grows.
+                    </div>
+                    <div class="tutorial-text">
+                        <strong>Time Attack (60s):</strong> Race against 60.0s countdown clock!
+                    </div>
+                    <div class="tutorial-text">
+                        <strong>Level Mode:</strong> 42 structured maps with wall barriers &amp; goals.
+                    </div>
+                    <div class="tutorial-text">
+                        <strong>Ghost Mode:</strong> Race against your best run's spectral ghost snake 👻!
+                    </div>
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <div class="tutorial-section-title">🍏 3. Food, Scoring &amp; Power-ups</div>
+                <div class="tutorial-text">
+                    • <strong>Neon Food:</strong> Earns +10 points &amp; increases snake length.<br>
+                    • <strong>Golden Star Bonus:</strong> Appears periodically for 10 seconds! Worth +50 points.<br>
+                    • <strong>Speed Scaling:</strong> Speed increases gradually (+2% or +5%) as you eat more food.
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <div class="tutorial-section-title">🎨 4. Customization &amp; Audio</div>
+                <div class="tutorial-text">
+                    • Select from <strong>5 Snake Skins</strong> &amp; <strong>6 Dynamic Themes</strong>.<br>
+                    • Choose from <strong>5 Built-in BGM Tracks</strong> or upload your own <code>.mp3/.wav</code> file.<br>
+                    • Toggle Sound &amp; Haptic Vibration anytime in settings.
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <div class="tutorial-section-title">📺 5. Rewarded Ad Revive</div>
+                <div class="tutorial-text">
+                    • On Game Over, tap <strong>"Watch Ad to Revive"</strong> to clear surrounding 3x3 cells and continue your run (1x per game session).
+                </div>
+            </div>
+
+            <button id="btnGotItTutorial" class="cyber-btn btn-green btn-large" style="width: 100%; margin-top: 0.4rem;">Got It, Let's Play! 🚀</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
