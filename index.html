@@ -600,28 +600,68 @@
 
 </div>
 <script>
-  // Adsterra Smartlink Integrator
+ <!-- Custom Rewarded Ad Modal -->
+<div id="adModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 99999; justify-content: center; align-items: center; flex-direction: column; color: #fff; font-family: sans-serif;">
+  <div style="position: relative; background: #111; border: 2px solid #00ffcc; border-radius: 12px; padding: 25px; text-align: center; width: 85%; max-width: 350px; box-shadow: 0 0 20px #00ffcc;">
+    <!-- Close Cross Button (7 sec baad dikhega) -->
+    <button id="closeAdBtn" style="display: none; position: absolute; top: 10px; right: 15px; background: #ff0055; color: #fff; border: none; font-size: 18px; font-weight: bold; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">✕</button>
+    
+    <h3 style="margin-top: 10px; color: #00ffcc;">Watching Ad...</h3>
+    <p style="font-size: 14px; color: #ccc;">Please wait to revive your snake</p>
+    
+    <!-- Countdown Timer Display -->
+    <div id="adTimer" style="font-size: 48px; font-weight: bold; margin: 20px 0; color: #ff0055;">7</div>
+  </div>
+</div>
+
+<script>
   const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
 
   document.addEventListener("DOMContentLoaded", function () {
+    const adModal = document.getElementById("adModal");
+    const adTimer = document.getElementById("adTimer");
+    const closeAdBtn = document.getElementById("closeAdBtn");
+    let countdown;
+
     document.body.addEventListener("click", function (event) {
       const target = event.target;
       if (target && target.innerText && target.innerText.includes("Watch Ad to Revive")) {
         event.preventDefault();
         
-        window.open(ADSTERRA_SMARTLINK, "_blank");
-        
-        if (typeof reviveGame === "function") {
-          reviveGame();
-        } else if (typeof resetGame === "function") {
-          resetGame();
-        } else {
-          location.reload();
-        }
+        adModal.style.display = "flex";
+        closeAdBtn.style.display = "none";
+        let timeLeft = 7;
+        adTimer.innerText = timeLeft;
+
+        countdown = setInterval(function () {
+          timeLeft--;
+          adTimer.innerText = timeLeft;
+
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            adTimer.innerText = "Ready!";
+            closeAdBtn.style.display = "block";
+          }
+        }, 1000);
+      }
+    });
+
+    closeAdBtn.addEventListener("click", function () {
+      adModal.style.display = "none";
+      
+      window.open(ADSTERRA_SMARTLINK, "_blank");
+
+      if (typeof reviveGame === "function") {
+        reviveGame();
+      } else if (typeof resetGame === "function") {
+        resetGame();
+      } else {
+        location.reload();
       }
     });
   });
 </script>
+
 
 </body>
 
