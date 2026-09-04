@@ -598,7 +598,8 @@
     </script>
     <script type="text/javascript" src="https://www.highrevenueformat.com/207fb55adc79be3e6e68d04695cf9375/invoke.js"></script>
 
-</div>
+</div> 
+  
 <!-- Custom Rewarded Ad Modal -->
 <div id="adModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 999999; justify-content: center; align-items: center; flex-direction: column; color: #fff; font-family: sans-serif;">
   <div style="position: relative; background: #111; border: 2px solid #00ffcc; border-radius: 12px; padding: 25px; text-align: center; width: 85%; max-width: 350px; box-shadow: 0 0 20px #00ffcc;">
@@ -615,55 +616,60 @@
 
 <script>
   const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
+  let adCountdownTimer = null;
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const adModal = document.getElementById("adModal");
-    const adTimer = document.getElementById("adTimer");
-    const closeAdBtn = document.getElementById("closeAdBtn");
-    let countdown;
+  document.addEventListener("click", function (event) {
+    const target = event.target;
+    if (target && target.innerText && target.innerText.trim().includes("Watch Ad to Revive")) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      const adModal = document.getElementById("adModal");
+      const adTimer = document.getElementById("adTimer");
+      const closeAdBtn = document.getElementById("closeAdBtn");
 
-    // capture: true purane AdMob wale fake popup ko rok dega
-    window.addEventListener("click", function (event) {
-      const target = event.target;
-      if (target && target.innerText && target.innerText.includes("Watch Ad to Revive")) {
-        event.preventDefault();
-        event.stopPropagation();
-        
+      if (adModal) {
         adModal.style.display = "flex";
         closeAdBtn.style.display = "none";
         let timeLeft = 7;
         adTimer.innerText = timeLeft;
 
-        clearInterval(countdown);
-        countdown = setInterval(function () {
+        if (adCountdownTimer) clearInterval(adCountdownTimer);
+
+        adCountdownTimer = setInterval(function () {
           timeLeft--;
           adTimer.innerText = timeLeft;
 
           if (timeLeft <= 0) {
-            clearInterval(countdown);
+            clearInterval(adCountdownTimer);
             adTimer.innerText = "Ready!";
             closeAdBtn.style.display = "block";
           }
         }, 1000);
       }
-    }, true);
+    }
+  }, true);
 
-    closeAdBtn.addEventListener("click", function () {
-      adModal.style.display = "none";
-      
-      window.open(ADSTERRA_SMARTLINK, "_blank");
+  document.addEventListener("DOMContentLoaded", function () {
+    const closeAdBtn = document.getElementById("closeAdBtn");
+    const adModal = document.getElementById("adModal");
 
-      if (typeof reviveGame === "function") {
-        reviveGame();
-      } else if (typeof resetGame === "function") {
-        resetGame();
-      } else {
-        location.reload();
-      }
-    });
+    if (closeAdBtn) {
+      closeAdBtn.addEventListener("click", function () {
+        adModal.style.display = "none";
+        window.open(ADSTERRA_SMARTLINK, "_blank");
+
+        if (typeof reviveGame === "function") {
+          reviveGame();
+        } else if (typeof resetGame === "function") {
+          resetGame();
+        } else {
+          location.reload();
+        }
+      });
+    }
   });
 </script>
-
 
 </body>
 
