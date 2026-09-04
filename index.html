@@ -599,6 +599,29 @@
     <script type="text/javascript" src="https://www.highrevenueformat.com/207fb55adc79be3e6e68d04695cf9375/invoke.js"></script>
 
 </div>
+<script>
+  // Adsterra Smartlink Integrator
+  const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("click", function (event) {
+      const target = event.target;
+      if (target && target.innerText && target.innerText.includes("Watch Ad to Revive")) {
+        event.preventDefault();
+        
+        window.open(ADSTERRA_SMARTLINK, "_blank");
+        
+        if (typeof reviveGame === "function") {
+          reviveGame();
+        } else if (typeof resetGame === "function") {
+          resetGame();
+        } else {
+          location.reload();
+        }
+      }
+    });
+  });
+</script>
 
 </body>
 
