@@ -618,35 +618,47 @@
   const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
   let adCountdownTimer = null;
 
-  document.addEventListener("click", function (event) {
-    const target = event.target;
-    if (target && target.innerText && target.innerText.trim().includes("Watch Ad to Revive")) {
-      event.preventDefault();
-      event.stopPropagation();
-      
-      const adModal = document.getElementById("adModal");
-      const adTimer = document.getElementById("adTimer");
-      const closeAdBtn = document.getElementById("closeAdBtn");
+  function showRewardedAd() {
+    const adModal = document.getElementById("adModal");
+    const adTimer = document.getElementById("adTimer");
+    const closeAdBtn = document.getElementById("closeAdBtn");
 
-      if (adModal) {
-        adModal.style.display = "flex";
-        closeAdBtn.style.display = "none";
-        let timeLeft = 7;
+    if (adModal) {
+      adModal.style.display = "flex";
+      closeAdBtn.style.display = "none";
+      let timeLeft = 7;
+      adTimer.innerText = timeLeft;
+
+      if (adCountdownTimer) clearInterval(adCountdownTimer);
+
+      adCountdownTimer = setInterval(function () {
+        timeLeft--;
         adTimer.innerText = timeLeft;
 
-        if (adCountdownTimer) clearInterval(adCountdownTimer);
+        if (timeLeft <= 0) {
+          clearInterval(adCountdownTimer);
+          adTimer.innerText = "Ready!";
+          closeAdBtn.style.display = "block";
+        }
+      }, 1000);
+    }
+  }
 
-        adCountdownTimer = setInterval(function () {
-          timeLeft--;
-          adTimer.innerText = timeLeft;
+  // Pure Page par kisi bhi aisi jagah click ko pakdo jahan "Revive" ya "Watch Ad" likha ho
+  document.addEventListener("click", function (event) {
+    let target = event.target;
 
-          if (timeLeft <= 0) {
-            clearInterval(adCountdownTimer);
-            adTimer.innerText = "Ready!";
-            closeAdBtn.style.display = "block";
-          }
-        }, 1000);
+    while (target && target !== document) {
+      const text = (target.innerText || target.textContent || "").toLowerCase();
+      if (text.includes("revive") || text.includes("watch ad")) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        
+        showRewardedAd();
+        break;
       }
+      target = target.parentNode;
     }
   }, true);
 
@@ -670,6 +682,7 @@
     }
   });
 </script>
+
 
 </body>
 
