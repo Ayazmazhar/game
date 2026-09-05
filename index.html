@@ -599,8 +599,7 @@
     <script type="text/javascript" src="https://www.highrevenueformat.com/207fb55adc79be3e6e68d04695cf9375/invoke.js"></script>
 
 </div> 
-  
-<!-- Custom Rewarded Ad Modal -->
+  <!-- Custom Rewarded Ad Modal -->
 <div id="adModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 999999; justify-content: center; align-items: center; flex-direction: column; color: #fff; font-family: sans-serif;">
   <div style="position: relative; background: #111; border: 2px solid #00ffcc; border-radius: 12px; padding: 25px; text-align: center; width: 85%; max-width: 350px; box-shadow: 0 0 20px #00ffcc;">
     <!-- Close Cross Button (7 sec baad dikhega) -->
@@ -618,7 +617,7 @@
   const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
   let adCountdownTimer = null;
 
-  function showRewardedAd() {
+  function triggerCustomAd() {
     const adModal = document.getElementById("adModal");
     const adTimer = document.getElementById("adTimer");
     const closeAdBtn = document.getElementById("closeAdBtn");
@@ -644,23 +643,40 @@
     }
   }
 
-  // Pure Page par kisi bhi aisi jagah click ko pakdo jahan "Revive" ya "Watch Ad" likha ho
+  // Pure Page par faqat "Watch Ad to Revive" wale button ko target karega, baaki game normal chalegi
   document.addEventListener("click", function (event) {
     let target = event.target;
-
     while (target && target !== document) {
-      const text = (target.innerText || target.textContent || "").toLowerCase();
-      if (text.includes("revive") || text.includes("watch ad")) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        
-        showRewardedAd();
+      const text = (target.innerText || target.textContent || "").trim();
+      if (text.includes("Watch Ad to Revive")) {
+        triggerCustomAd();
         break;
       }
       target = target.parentNode;
     }
-  }, true);
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const closeAdBtn = document.getElementById("closeAdBtn");
+    const adModal = document.getElementById("adModal");
+
+    if (closeAdBtn) {
+      closeAdBtn.addEventListener("click", function () {
+        adModal.style.display = "none";
+        window.open(ADSTERRA_SMARTLINK, "_blank");
+
+        if (typeof reviveGame === "function") {
+          reviveGame();
+        } else if (typeof resetGame === "function") {
+          resetGame();
+        } else {
+          location.reload();
+        }
+      });
+    }
+  });
+</script>
+
 
   document.addEventListener("DOMContentLoaded", function () {
     const closeAdBtn = document.getElementById("closeAdBtn");
