@@ -614,57 +614,60 @@
 </div>
 
 <script>
-  const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
-  let adCountdownTimer = null;
+const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/m33qssw4?key=eb2f0d9f23df1cc90dfa69403c033fff";
+let adCountdownTimer = null;
 
-  function triggerCustomAd() {
+function triggerCustomAd() {
     const adModal = document.getElementById("adModal");
     const adTimer = document.getElementById("adTimer");
     const closeAdBtn = document.getElementById("closeAdBtn");
 
     if (adModal) {
-      adModal.style.display = "flex";
-      closeAdBtn.style.display = "none";
-      let timeLeft = 7;
-      adTimer.innerText = timeLeft;
+        adModal.style.display = "flex";
+        if (closeAdBtn) closeAdBtn.style.display = "none";
+        
+        let timeLeft = 7;
+        if (adTimer) adTimer.innerText = timeLeft;
 
-      if (adCountdownTimer) clearInterval(adCountdownTimer);
+        if (adCountdownTimer) clearInterval(adCountdownTimer);
 
-      adCountdownTimer = setInterval(function () {
-        timeLeft--;
-        adTimer.innerText = timeLeft;
+        adCountdownTimer = setInterval(function () {
+            timeLeft--;
+            if (adTimer) adTimer.innerText = timeLeft;
 
-        if (timeLeft <= 0) {
-          clearInterval(adCountdownTimer);
-          adTimer.innerText = "Ready!";
-          closeAdBtn.style.display = "block";
-        }
-      }, 1000);
+            if (timeLeft <= 0) {
+                clearInterval(adCountdownTimer);
+                if (adTimer) adTimer.innerText = "Ready!";
+                if (closeAdBtn) closeAdBtn.style.display = "block";
+            }
+        }, 1000);
     }
-  }
+}
 
-  // Pure Page par faqat "Watch Ad to Revive" wale button ko target karega, baaki game normal chalegi
-  document.addEventListener("click", function (event) {
+// Watch Ad to Revive button target logic
+document.addEventListener("click", function (event) {
     let target = event.target;
     while (target && target !== document) {
-      const text = (target.innerText || target.textContent || "").trim();
-      if (text.includes("Watch Ad to Revive")) {
-        triggerCustomAd();
-        break;
-      }
-      target = target.parentNode;
+        const text = (target.innerText || target.textContent || "").trim();
+        if (text.includes("Watch Ad to Revive")) {
+            triggerCustomAd();
+            break;
+        }
+        target = target.parentNode;
     }
-  });
+});
 
- document.addEventListener("DOMContentLoaded", function () {
+// Close/Cross button click - WITHOUT opening new tab
+document.addEventListener("DOMContentLoaded", function () {
     const closeAdBtn = document.getElementById("closeAdBtn");
     const adModal = document.getElementById("adModal");
 
     if (closeAdBtn) {
         closeAdBtn.addEventListener("click", function () {
+            // 1. Popup ko band karein
             if (adModal) adModal.style.display = "none";
-            window.open(ADSTERRA_SMARTLINK, "_blank");
 
+            // 2. Naya page KHOLE BINA game revive karein
             if (typeof reviveGame === "function") {
                 reviveGame();
             } else if (typeof resetGame === "function") {
@@ -676,7 +679,7 @@
     }
 });
 </script>
- 
+
 </body>
 
 </html>
