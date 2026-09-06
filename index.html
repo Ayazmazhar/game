@@ -656,50 +656,27 @@
     }
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
+ document.addEventListener("DOMContentLoaded", function () {
     const closeAdBtn = document.getElementById("closeAdBtn");
     const adModal = document.getElementById("adModal");
 
     if (closeAdBtn) {
-      closeAdBtn.addEventListener("click", function () {
-        adModal.style.display = "none";
-        window.open(ADSTERRA_SMARTLINK, "_blank");
+        closeAdBtn.addEventListener("click", function () {
+            if (adModal) adModal.style.display = "none";
+            window.open(ADSTERRA_SMARTLINK, "_blank");
 
-        if (typeof reviveGame === "function") {
-          reviveGame();
-        } else if (typeof resetGame === "function") {
-          resetGame();
-        } else {
-          location.reload();
-        }
-      });
+            if (typeof reviveGame === "function") {
+                reviveGame();
+            } else if (typeof resetGame === "function") {
+                resetGame();
+            } else {
+                location.reload();
+            }
+        });
     }
-  });
+});
 </script>
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const closeAdBtn = document.getElementById("closeAdBtn");
-    const adModal = document.getElementById("adModal");
-
-    if (closeAdBtn) {
-      closeAdBtn.addEventListener("click", function () {
-        adModal.style.display = "none";
-        window.open(ADSTERRA_SMARTLINK, "_blank");
-
-        if (typeof reviveGame === "function") {
-          reviveGame();
-        } else if (typeof resetGame === "function") {
-          resetGame();
-        } else {
-          location.reload();
-        }
-      });
-    }
-  });
-</script>
-
-
+ 
 </body>
 
 </html>
